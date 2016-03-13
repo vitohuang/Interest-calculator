@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "testCal",
+    "style": "css",
+    "postcss": false
+  }
+}
