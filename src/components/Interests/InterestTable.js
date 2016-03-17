@@ -6,7 +6,7 @@ class InterestTable extends React.Component {
   render() {
     // Sort out the rows
     var rows = [];
-    this.props.data.forEach(function(rowData) {
+    this.props.data.data.forEach(function(rowData) {
       rows.push(
         <InterestTableRow
           year={rowData.year}
@@ -21,7 +21,7 @@ class InterestTable extends React.Component {
 
     return (
       <div className="interest-table">
-        <h2>The detailed table</h2>
+        <h2>{this.props.data.title}</h2>
         <table>
           <thead>
             <th>Year</th>

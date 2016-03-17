@@ -15,9 +15,7 @@ class SimpleInterests extends React.Component {
       principle: null,
       interest: null,
       years: null,
-      tableData: [],
-      graphData: [],
-      futureValue: null,
+      interestData: [],
       fsFutureValue: null,
       fcFutureValue: null,
     };
@@ -25,48 +23,49 @@ class SimpleInterests extends React.Component {
 
   // Handle any changes in the input
   handleInputChange(inputs) {
-    console.log(inputs);
-
-console.log("simple interest");
-console.log(fSimpleInterests);
-    // Calculation for simple interest from formula
-    var futureValue = inputs.principle * (1 + inputs.interest * inputs.years);
 
     // Use the lib to calculation
     var fsFutureValue = fSimpleInterests(inputs.principle, inputs.interest, inputs.years);
     var fcFutureValue = fCompoundInterests(inputs.principle, inputs.interest, inputs.years);
 
-    var tableData = SimpleInterestsCal(inputs.principle, inputs.interest, inputs.years);
+    var simpleData = SimpleInterestsCal(inputs.principle, inputs.interest, inputs.years);
     var compoundData = CompoundInterestsCal(inputs.principle, inputs.interest, inputs.years);
-    var graphData = [
+    var interestData = [
       {
         title: 'Simple Interest',
         colour: 'blue',
-        data: tableData
+        data: simpleData
       },
       {
-        title: 'Compound Interest',
+        title: 'Compounded Interest',
         colour: 'red',
         data: compoundData
       }
     ];
 
-    console.log("s table data", tableData);
-    console.log('graph data', graphData);
     // Set the new state
     this.setState({
       principle: inputs.principle,
       interest: inputs.interst,
       years: inputs.years,
-      futureValue: futureValue,
       fsFutureValue: fsFutureValue,
       fcFutureValue: fcFutureValue,
-      tableData: tableData,
-      graphData: graphData
+      interestData: interestData
     });
   }
 
   render() {
+    // Check if there interestData
+    var components = [];
+    if (this.state.interestData.length > 0) {
+      components.push(<InterestGraph data={this.state.interestData} />);
+
+      // Output tables
+      this.state.interestData.forEach(function(data) {
+        components.push(<InterestTable data={data} />);
+      });
+    }
+
     return (
       <div className="simple-intrests">
         <h3>This is the simple interest</h3>
@@ -84,13 +83,8 @@ console.log(fSimpleInterests);
         <div className="future-value">
           Formula Compound Interests Future Value:{this.state.fcFutureValue}
         </div>
-        <div className="future-value">
-          Future Value:{this.state.futureValue}
-        </div>
 
-        <InterestGraph data={this.state.graphData} />
-
-        <InterestTable data={this.state.tableData} />
+        {components}
       </div>
     );
   }
