@@ -42,3 +42,35 @@ export function SimpleInterestsCal(p, r, t) {
 
   return data;
 }
+
+export function CompoundInterestsCal(p, r, t) {
+  p = parseFloat(p);
+  r = parseFloat(r);
+  t = parseFloat(t);
+
+  var data = [];
+  var immediateInterest = 0;
+  var immediateBalance = p;
+  var startBalance, startPrinciple, endBalance, endPrinciple;
+
+  // Assign defaults
+  startBalance = endBalance = startPrinciple = endPrinciple = p;
+  endPrinciple = p;
+
+  // Go through all the years
+  for (var i = 1; i <= t; i++) {
+    startBalance = endBalance;
+    immediateInterest = startBalance * r;
+    endBalance += immediateInterest;
+    data.push({
+      year: i,
+      startPrinciple: startPrinciple,
+      startBalance: startBalance,
+      interests: immediateInterest,
+      endBalance: endBalance,
+      endPrinciple: endPrinciple
+    })
+  };
+
+  return data;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fSimpleInterests, fCompoundInterests, SimpleInterestsCal } from './InterestCal.js';
+import { fSimpleInterests, fCompoundInterests, SimpleInterestsCal, CompoundInterestsCal} from './InterestCal.js';
 
 import InterestInputs from './InterestInputs.js';
 import InterestTable from './InterestTable.js';
@@ -16,6 +16,7 @@ class SimpleInterests extends React.Component {
       interest: null,
       years: null,
       tableData: [],
+      graphData: [],
       futureValue: null,
       fsFutureValue: null,
       fcFutureValue: null,
@@ -36,7 +37,22 @@ console.log(fSimpleInterests);
     var fcFutureValue = fCompoundInterests(inputs.principle, inputs.interest, inputs.years);
 
     var tableData = SimpleInterestsCal(inputs.principle, inputs.interest, inputs.years);
+    var compoundData = CompoundInterestsCal(inputs.principle, inputs.interest, inputs.years);
+    var graphData = [
+      {
+        title: 'Simple Interest',
+        colour: 'blue',
+        data: tableData
+      },
+      {
+        title: 'Compound Interest',
+        colour: 'red',
+        data: compoundData
+      }
+    ];
+
     console.log("s table data", tableData);
+    console.log('graph data', graphData);
     // Set the new state
     this.setState({
       principle: inputs.principle,
@@ -45,7 +61,8 @@ console.log(fSimpleInterests);
       futureValue: futureValue,
       fsFutureValue: fsFutureValue,
       fcFutureValue: fcFutureValue,
-      tableData: tableData
+      tableData: tableData,
+      graphData: graphData
     });
   }
 
@@ -71,9 +88,9 @@ console.log(fSimpleInterests);
           Future Value:{this.state.futureValue}
         </div>
 
-        <InterestTable data={this.state.tableData} />
+        <InterestGraph data={this.state.graphData} />
 
-        <InterestGraph data={this.state.tableData} />
+        <InterestTable data={this.state.tableData} />
       </div>
     );
   }
