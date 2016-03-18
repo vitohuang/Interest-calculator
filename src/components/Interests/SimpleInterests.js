@@ -34,11 +34,13 @@ class SimpleInterests extends React.Component {
       {
         title: 'Simple Interest',
         colour: 'blue',
+        className: 'simple',
         data: simpleData
       },
       {
         title: 'Compounded Interest',
         colour: 'red',
+        className: 'compound',
         data: compoundData
       }
     ];

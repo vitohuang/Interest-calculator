@@ -5,7 +5,10 @@ import ReactFauxDOM from 'react-faux-dom'
 class InterestGraph extends React.Component {
   render() {
 
+    // Data
     var data = this.props.data
+
+    // Dimension
     var margin = this.props.margin
     var width = this.props.width - margin.left - margin.right
     var height = this.props.height - margin.top - margin.bottom
@@ -14,9 +17,14 @@ class InterestGraph extends React.Component {
     var node = ReactFauxDOM.createElement('svg')
 
     if (data.length > 0) {
-      console.log(data);
       var x = d3.scale.linear()
       .range([0, width])
+      /*
+      .domain([
+        0,
+        d3.max(data[1], function(d) {return d.year; })
+      ]);
+      */
       .domain(
         d3.extent(data[1].data, function(d) { return d.year })
       );
@@ -70,6 +78,24 @@ class InterestGraph extends React.Component {
         .attr('stroke', lineData.colour)
         .attr('stroke-width', 2)
         .attr('fill', 'none')
+
+        // Draw cycle
+        svg.selectAll('circle.'+lineData.className)
+        .data(lineData.data)
+        .enter().append('circle')
+        .attr('class', lineData.className)
+        .attr('cx', function(d) { return x(d.year) })
+        .attr('cy', function(d) { return y(d.endBalance) })
+        .attr('r', 8)
+        .style('fill', 'green')
+        .on('mouseover', function(event) {
+          d3.select(this).style('fill', 'red');
+        })
+        .on('mouseout', function(event) {
+          d3.select(this).style('fill', 'green');
+        })
+        .append('svg:title')
+        .text(function(d) { return 'Year:' + d.year + ' - ' + d.endBalance })
       });
     }
 
