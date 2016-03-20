@@ -62,7 +62,7 @@ class InterestGraph extends React.Component {
       .attr('y', 6)
       .attr('dy', '.71em')
       .style('text-anchor', 'end')
-      .text('Balance ($)')
+      .text('Balance (£)')
 
       // Draw lines
       data.forEach(function(lineData) {
