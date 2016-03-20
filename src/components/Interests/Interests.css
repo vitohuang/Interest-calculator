@@ -1,0 +1,186 @@
+body {
+  font-family: helvetica;
+}
+
+/* Common */
+h1,h2 {
+  font-weight: 500;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+/* Interests related */
+.interests {
+  width: 80%;
+  margin: 2em auto;
+}
+
+.interests .title {
+  text-align: center;
+}
+
+.info-wrapper {
+  float: left;
+  width: 50%;
+}
+
+.graph-wrapper {
+  float: right;
+  width: 50%;
+}
+
+.info-wrapper.without-output {
+  float: none;
+  margin: 0 auto;
+}
+
+/* Input fields */
+.input-row {
+  margin: 0 0 1.5em 0;
+  display: block;
+}
+
+.input-row label {
+  display: block;
+  float: left;
+  padding: 0.1em;
+  font-size: 1.5em;
+  width: 40%;
+}
+
+.input-row input[type="text"] {
+  width: 57%;
+  padding: 0.1em;
+  font-size: 1.5em;
+  text-align: center;
+  appearance: none;
+  box-shadow: none;
+  border: solid 1px #dcdcdc;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.input-row input[type="text"]:focus {
+  outline: none;
+  border: solid 1px #707070;
+  box-shadow: 0 0 5px 1px #969696;
+}
+.input-row input[type="text"]:focus + label {
+  color: red;
+}
+
+/* Output */
+.interest-output h2 {
+  text-align: center;
+}
+
+.interest-output p {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.interest-output .simple p {
+  font-size: 1em;
+  text-align: center;
+}
+
+.interest-output p.total {
+  margin: 0;
+  font-size: 2.5em;
+}
+.interest-output .simple p.total {
+  margin: 0;
+  font-size: 2em;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.simple.line {
+  stroke: orangered;
+}
+
+circle {
+  fill: #036;
+}
+
+/* Table */
+.tables h2 {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.tables .table-wrapper {
+  width: 49%;
+}
+
+.tables .table-wrapper:nth-child(odd) {
+  float: left;
+}
+
+.tables .table-wrapper:nth-child(even) {
+  float: right;
+}
+
+.tables .table-wrapper .table-content {
+  overflow-x: auto;
+}
+
+th,
+td,
+table {
+  border: 1px solid #ddd;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th {
+  /*
+  background-color: #4CAF50;
+  color: white;
+  */
+  height: 3em;
+  font-weight: 400;
+}
+
+table tr {
+}
+
+table tr:hover {
+  background-color: #f5f5f5;
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table td {
+  text-align: center;
+}
+
+table th,
+table td {
+  padding: 0.5em;
+}

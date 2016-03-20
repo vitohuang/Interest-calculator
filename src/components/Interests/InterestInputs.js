@@ -14,19 +14,21 @@ class InterestInputs extends React.Component {
   render() {
     return (
       <div className="interest-inputs">
-        <h3>Your inputs</h3>
-        <label>
-          Principle
+
+        <div className="input-row">
+          <label>Principle</label>
           <input type="text" ref="principle" value={this.props.principle} onChange={this.handleChange.bind(this)} />
-        </label>
-        <label>
-          Interest
+        </div>
+
+        <div className="input-row">
+          <label>Interest Rate (%)</label>
           <input type="text" ref="interest" value={this.props.interest} onChange={this.handleChange.bind(this)} />
-        </label>
-        <label>
-          Years
+        </div>
+
+        <div className="input-row">
+          <label>Years</label>
           <input type="text" ref="years" value={this.props.years} onChange={this.handleChange.bind(this)}/>
-        </label>
+        </div>
       </div>
     );
   }

@@ -73,7 +73,7 @@ class InterestGraph extends React.Component {
 
         svg.append('path')
         .datum(lineData.data)
-        .attr('class', 'line')
+        .attr('class', 'line '+lineData.className)
         .attr('d', line)
         .attr('stroke', lineData.colour)
         .attr('stroke-width', 2)
@@ -86,13 +86,13 @@ class InterestGraph extends React.Component {
         .attr('class', lineData.className)
         .attr('cx', function(d) { return x(d.year) })
         .attr('cy', function(d) { return y(d.endBalance) })
-        .attr('r', 8)
-        .style('fill', 'green')
+        .attr('r', 5)
         .on('mouseover', function(event) {
           d3.select(this).style('fill', 'red');
         })
         .on('mouseout', function(event) {
           d3.select(this).style('fill', 'green');
+          console.log('self props',self.props);
         })
         .append('svg:title')
         .text(function(d) { return 'Year:' + d.year + ' - ' + d.endBalance })
@@ -101,7 +101,6 @@ class InterestGraph extends React.Component {
 
     return (
       <div className="interest-graph">
-        <h2>The Graph</h2>
         {node.toReact()}
       </div>
     );
@@ -115,7 +114,7 @@ InterestGraph.defaultProps = {
     top: 20,
     right: 20,
     bottom: 30,
-    left: 50
+    left: 80
   },
   data: []
 }

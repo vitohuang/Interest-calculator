@@ -6,9 +6,9 @@ class InterestTableRow extends React.Component {
       <tr>
         <td>{this.props.year}</td>
         <td>{this.props.startPrinciple}</td>
-        <td>{this.props.startBalance}</td>
-        <td>{this.props.interests}</td>
-        <td>{this.props.endBalance}</td>
+        <td>{parseFloat(this.props.startBalance).toFixed(2)}</td>
+        <td>{parseFloat(this.props.interests).toFixed(2)}</td>
+        <td>{parseFloat(this.props.endBalance).toFixed(2)}</td>
         <td>{this.props.endPrinciple}</td>
       </tr>
     );

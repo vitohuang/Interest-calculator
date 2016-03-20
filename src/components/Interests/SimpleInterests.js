@@ -3,6 +3,7 @@ import React from 'react';
 import { fSimpleInterests, fCompoundInterests, SimpleInterestsCal, CompoundInterestsCal} from './InterestCal.js';
 
 import InterestInputs from './InterestInputs.js';
+import InterestOutput from './InterestOutput.js';
 import InterestTable from './InterestTable.js';
 import InterestGraph from './InterestGraph.js';
 
@@ -23,70 +24,104 @@ class SimpleInterests extends React.Component {
 
   // Handle any changes in the input
   handleInputChange(inputs) {
-
-    // Use the lib to calculation
-    var fsFutureValue = fSimpleInterests(inputs.principle, inputs.interest, inputs.years);
-    var fcFutureValue = fCompoundInterests(inputs.principle, inputs.interest, inputs.years);
-
-    var simpleData = SimpleInterestsCal(inputs.principle, inputs.interest, inputs.years);
-    var compoundData = CompoundInterestsCal(inputs.principle, inputs.interest, inputs.years);
-    var interestData = [
-      {
-        title: 'Simple Interest',
-        colour: 'blue',
-        className: 'simple',
-        data: simpleData
-      },
-      {
-        title: 'Compounded Interest',
-        colour: 'red',
-        className: 'compound',
-        data: compoundData
-      }
-    ];
+    // Format the inputs
+    var principle = +inputs.principle;
+    var interest = parseFloat(inputs.interest);
+    var years = parseInt(inputs.years, 10);
 
     // Set the new state
-    this.setState({
-      principle: inputs.principle,
-      interest: inputs.interst,
-      years: inputs.years,
-      fsFutureValue: fsFutureValue,
-      fcFutureValue: fcFutureValue,
-      interestData: interestData
-    });
+    var changedState = {
+      principle: principle ? principle : inputs.principle,
+      interest: interest ? interest : inputs.interest,
+      years: years ? years : inputs.years,
+      fsFutureValue: null,
+      fcFutureValue: null,
+      interestData: []
+    };
+
+
+    if (principle && interest && years) {
+      // Convert the interest to percentage
+      interest = interest / 100;
+
+      // Use the lib to calculation
+      var fsFutureValue = fSimpleInterests(principle, interest, years);
+      var fcFutureValue = fCompoundInterests(principle, interest, years);
+
+      var simpleData = SimpleInterestsCal(principle, interest, years);
+      var compoundData = CompoundInterestsCal(principle, interest, years);
+      var interestData = [
+        {
+          title: 'Simple Interest',
+          colour: 'blue',
+          className: 'simple',
+          data: simpleData
+        },
+        {
+          title: 'Compounded Interest',
+          colour: 'red',
+          className: 'compound',
+          data: compoundData
+        }
+      ];
+
+      // Changed states
+      Object.assign(changedState, {
+        fsFutureValue: fsFutureValue,
+        fcFutureValue: fcFutureValue,
+        interestData: interestData
+      });
+    }
+
+    // Set the new state
+    this.setState(changedState);
   }
 
   render() {
+    // Output
+    var interestOutput;
+    if (this.state.fcFutureValue) {
+      interestOutput = <InterestOutput simple={this.state.fsFutureValue} compound={this.state.fcFutureValue}/>;
+    }
     // Check if there interestData
-    var components = [];
+    var graph = null;
+    var tables = [];
     if (this.state.interestData.length > 0) {
-      components.push(<InterestGraph data={this.state.interestData} />);
+      graph = <InterestGraph data={this.state.interestData} width="500" height="400"/>;
 
       // Output tables
       this.state.interestData.forEach(function(data) {
-        components.push(<InterestTable data={data} />);
+        tables.push(<InterestTable data={data} />);
       });
     }
 
     return (
-      <div className="simple-intrests">
-        <h3>This is the simple interest</h3>
+      <div className="interest-overview">
 
-        <InterestInputs
-          principle={this.state.principle}
-          interest={this.state.interest}
-          years={this.state.years}
-          onUserInput={this.handleInputChange.bind(this)}
-        />
+        <h1 className="title">Interest Calculator</h1>
 
-        <div className="future-value">
-          Formula Simple Interests Future Value:{this.state.fsFutureValue}
+        <div className="first-row">
+          <div className={this.state.interestData.length ? 'with-output info-wrapper' : 'without-output info-wrapper'}>
+            <InterestInputs
+              principle={this.state.principle}
+              interest={this.state.interest}
+              years={this.state.years}
+              onUserInput={this.handleInputChange.bind(this)}
+            />
+
+            {interestOutput}
+          </div>
+
+          <div className="right graph-wrapper">
+            {graph}
+          </div>
+
+          <div className="clear"></div>
         </div>
-        <div className="future-value">
-          Formula Compound Interests Future Value:{this.state.fcFutureValue}
-        </div>
 
-        {components}
+        <div className="tables">
+          {tables}
+        </div>
       </div>
     );
   }
