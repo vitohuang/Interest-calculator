@@ -31,9 +31,9 @@ class SimpleInterests extends React.Component {
 
     // Set the new state
     var changedState = {
-      principle: principle ? principle : inputs.principle,
-      interest: interest ? interest : inputs.interest,
-      years: years ? years : inputs.years,
+      principle: inputs.principle,
+      interest: inputs.interest,
+      years: inputs.years,
       fsFutureValue: null,
       fcFutureValue: null,
       interestData: []
